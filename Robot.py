@@ -18,6 +18,7 @@ class Robot:
 
     # Takes action for the two encoded bits (action_bits) passed as argument
     def take_action(self, action_bits):
+        """ Take action based on action_bits (two encoded bits) and update robot's position on map """
         if action_bits == '00':     # Do nothing
             return
         elif action_bits == '01':   # Turn right (+90)
@@ -46,6 +47,7 @@ class Robot:
 
     # Follow actions and robots run on the Grid
     def follow_actions(self):
+        """ Follow actions based on the entire robot's action_string """
         for i in range(0, len(self.actions_string), 2):
             self.take_action(self.actions_string[i:i+2])
             # calculating and updating fitness_value
@@ -59,6 +61,7 @@ class Robot:
 
     # Calculates fitness aka FITNESS FUNCTION
     def update_fitness(self):
+        """ Fitness function. Calculates and updates fitness of the robot """
         pX = self.posX
         pY = self.posY
         # Fitness is incremented if the robot's cell has a wall near it

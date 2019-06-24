@@ -12,27 +12,27 @@ class Population:
         self.mutation_rate = 0.01           # Mutation rate
         self.crossover_rate = 0.85          # Crossover rate
         
-    # Initializes Population of robots for generation 0
-    def populate_robots(self):
+    def populate_robots(self):  # Initializes Population of robots for generation 0
+        """ Initializes Population of robots for generation 0 """
         for i in range(self.size):
             rand_bit_string = ''.join(random.choices('10', k=56))
             self.robots_list.append(Robot('E', 1, 1, rand_bit_string))
         Population.generation_num += 1
         
-    # Calculates expected count of each robots in next gen
-    def calculate_exp_counts(self):
+    def calculate_exp_counts(self): # Calculates expected count of each robots in next gen
+        """ Calculates expected count of each robots in next gen """
         sum_fitness = 0
         for robot in self.robots_list:
             sum_fitness += robot.fitness_value
         for robot in self.robots_list:
             robot.exp_count = int(round(self.size * (robot.fitness_value/sum_fitness)))
 
-    # Make the robots for the next generation using expected count
-    def make_next_gen_pop(self):
+    def make_next_gen_pop(self):    # Make the robots for the next generation using expected count
+        """ Make the robots for the next generation using expected count """
         self.calculate_exp_counts()
         self.robots_list.sort(key=lambda x: x.fitness_value, reverse=True)
         temp_robot_list = []
-        for robot in self.robots_list:                          # REPLACE WITH for robot in self.robot_list
+        for robot in self.robots_list:
             for _ in range(robot.exp_count):
                 temp_robot_list.append(Robot('E', 1, 1, robot.actions_string))
         
@@ -45,8 +45,8 @@ class Population:
 
     ######      Genetic Algorithm Crossover and Mutations       ######
 
-    # Mutations of Robots
-    def mutate_robots(self):
+    def mutate_robots(self):    # Mutations of Robots
+        """ Mutates each current generations' robot's action_string based on mutation_rate """
         for robot in self.robots_list:
             temp_string = ""
             for bit in robot.actions_string:
@@ -58,8 +58,9 @@ class Population:
                         bit = '0'
                 temp_string += bit
                 robot.actions_string = temp_string
-    # Crossover of Robots
-    def crossover_robots(self):
+    
+    def crossover_robots(self): # Crossover of Robots
+        """ Crossovers current generation robots by randomly making pairs """
         random.shuffle(self.robots_list)
         for robot1,robot2 in zip(self.robots_list[0::2], self.robots_list[1::2]):
             rand_num = random.uniform(0, 1)
