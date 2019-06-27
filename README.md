@@ -6,12 +6,12 @@ Generate a population of robots with random [actions strings](#Actions-String). 
 
 ### Actions String
 This is a string which encodes the entire actions that the robot can take. The actions are encoded as follows:
-| Action Bit | Encoding |
-| :--------: | :------: |
-| Do nothing | 00 |
-| Turn anti-clockwise | 10 |
-| Turn clockwise | 01 |
-| Move forward | 11 |
+|      Action Bit     | Encoding |
+|:-------------------:|:--------:|
+|      Do nothing     |    00    |
+| Turn anti-clockwise |    10    |
+|    Turn clockwise   |    01    |
+|     Move forward    |    11    |
 There are 28 actions that a robot can perform in one cycle so actions string length is 56 (28 * 2)
 
 ### Roulette Wheel Selection
