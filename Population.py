@@ -6,11 +6,11 @@ import random
 class Population:
     
     generation_num = 0
-    def __init__(self, size, r_list): 
+    def __init__(self, size, crs_rate=0.85, mt_rate=0.01): 
         self.size = size
-        self.robots_list = r_list
-        self.mutation_rate = 0.01           # Mutation rate
-        self.crossover_rate = 0.85          # Crossover rate
+        self.robots_list = []
+        self.crossover_rate = crs_rate      # Crossover rate
+        self.mutation_rate = mt_rate        # Mutation rate
         
     def populate_robots(self):  # Initializes Population of robots for generation 0
         """ Initializes Population of robots for generation 0 """

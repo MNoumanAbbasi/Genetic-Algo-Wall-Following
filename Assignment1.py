@@ -6,17 +6,28 @@ logFile = open("logTime.txt","w+")
 
 # Setting up population and robots for generation 0
 population_size = 30
-myPopulation = Population(population_size, [])
-myPopulation.populate_robots()
-myPopulation.robots_list
+mutation_rate = 0.01
+crossover_rate = 0.85
 max_fitness = 20                    # MAX FITNESS BEFORE PROGRAM STOPS (lower to let program stop early)
 # MENU
 print("Genetic Algorithm Simulation for Wall Crawling Robot")
-print("\nPopulation Size:", population_size)
-print("Crossover rate:", myPopulation.crossover_rate, "\nMutation rate:", myPopulation.mutation_rate)
-choice = input("Enter 'y' to start algorithm:")
+choice = 0
+while True:
+    print("\nPopulation Size:", population_size)
+    print("Crossover rate:", crossover_rate, "\nMutation rate:", mutation_rate)
+    choice = int(input("Enter '1' to start algorithm or '2' to change above parameters: "))
+    if choice != 2:
+        break
+    user_pop_size = int(input("Enter population size (default " + str(population_size) + "): "))
+    population_size = user_pop_size if 1 < user_pop_size < 500 else population_size
+    user_crossover_rate = float(input("Enter crossover rate (default "+str(crossover_rate)+"):"))
+    crossover_rate = user_crossover_rate if 0 < user_crossover_rate < 1 else crossover_rate
+    user_mutation_rate = float(input("Enter mutation rate (default "+str(mutation_rate)+"):")) 
+    mutation_rate = user_mutation_rate if 0 < user_mutation_rate < 1 else mutation_rate
 
-if choice == 'y' or choice == 'Y':
+if choice == 1:
+    myPopulation = Population(population_size, crossover_rate, mutation_rate)
+    myPopulation.populate_robots()
     # Simulating generation 0
     for robot in myPopulation.robots_list:
         robot.follow_actions()
@@ -25,7 +36,7 @@ if choice == 'y' or choice == 'Y':
     best_robot = myPopulation.robots_list[0]
 
     # Simulating all generations
-    max_generation = 5000                           # MAX GENERATION: 5000
+    max_generation = 500                           # MAX GENERATION: 5000
     for i in range(max_generation):
         myPopulation.make_next_gen_pop()
         myPopulation.crossover_robots()                         # Crossing robots
@@ -51,3 +62,5 @@ if choice == 'y' or choice == 'Y':
     print("This program took", time.time() - start_time, "s to reach above solution")
     logFile.write("Program runtime: " + str(time.time() - start_time))
     logFile.close()
+else:
+    print("Exiting.")
